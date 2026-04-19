@@ -1,0 +1,20 @@
+{
+  "name": "low-level-design",
+  "version": "1.0.0",
+  "description": "Practical implementations of Low-Level System Designs in TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bms": "ts-node book-my-show/index.ts",
+    "lms": "ts-node Library-Management-System/code.ts",
+    "hotel": "ts-node hotel-management-system/code.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}

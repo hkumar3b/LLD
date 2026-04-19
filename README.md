@@ -17,12 +17,13 @@ Across all projects in this repository, the following architectural principles a
 ## Technology Stack
 - **Language**: TypeScript
 - **Environment**: Node.js
+- **Configuration**: `tsconfig.json` configured for strict typing.
 
 ## Projects Implemented
 Currently, the following systems have been modeled:
-- **[Library Management System](file:///home/himanshu/Documents/low-level-design/Library-Management-System)**: Manages book collections, member subscriptions, and lending processes. (Includes Use Case Diagram)
-- **[BookMyShow](file:///home/himanshu/Documents/low-level-design/book-my-show)**: A movie ticket booking platform handling theaters, shows, and seat reservations.
-- **[Hotel Management System](file:///home/himanshu/Documents/low-level-design/hotel-management-system)**: Systems for managing room bookings, housekeeping, and guest services.
+- 📚 **Library Management System**: Manages book collections, member subscriptions, and lending processes. (See `Library-Management-System/code.ts`)
+- 🎟️ **BookMyShow**: A movie ticket booking platform handling theaters, shows, and seat reservations. (See `book-my-show/index.ts`)
+- 🏨 **Hotel Management System**: Systems for managing room bookings, housekeeping, and guest services. (See `hotel-management-system/code.ts`)
 
 ## Getting Started
 To run these projects locally:
@@ -34,12 +35,18 @@ To run these projects locally:
    ```
 
 2. **Install dependencies**:
-   Ensure you have Node.js installed, then install TypeScript and `ts-node` globally:
    ```bash
-   npm install -g typescript ts-node
+   npm install
    ```
 
 3. **Run a specific project**:
+   Use the predefined npm scripts:
    ```bash
-   ts-node book-my-show/index.ts
+   npm run bms    # BookMyShow
+   npm run lms    # Library Management System
+   npm run hotel  # Hotel Management System
+   ```
+   Or use `ts-node` directly via `npx`:
+   ```bash
+   npx ts-node book-my-show/index.ts
    ```
