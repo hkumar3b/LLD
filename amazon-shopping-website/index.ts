@@ -273,12 +273,6 @@ class OrderLog {
     }
 }
 
-enum NotificationType { // Inferred from usage in NotificationService
-    EMAIL = "EMAIL",
-    WHATSAPP = "WHATSAPP",
-    SMS = "SMS",
-}
-
 class NotificationDomain {
     notificationID: string;
     notificationType: NotificationType;
@@ -290,62 +284,17 @@ class NotificationDomain {
         this.user = user;
     }
 }
-
-class MessageAttribute { // Renamed from MessageAttributes to MessageAttribute for singular context
-    to: string;
-    from: string;
-    message: string;
-
-    constructor(to: string, from: string, message: string) {
-        this.to = to;
-        this.from = from;
-        this.message = message;
-    }
-}
-
-interface Notification {
-    sendNotification(messageAttribute: MessageAttribute): boolean;
-}
-
-class EmailNotification implements Notification {
-    sendNotification(messageAttribute: MessageAttribute): boolean {
-        // Implementation
-        console.log(`Sending email to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
-        return true;
-    }
-}
-
-class WhatsappNotification implements Notification {
-    sendNotification(messageAttribute: MessageAttribute): boolean {
-        // Implementation
-        console.log(`Sending WhatsApp to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
-        return true;
-    }
-}
-
-class SMSNotification implements Notification {
-    sendNotification(messageAttribute: MessageAttribute): boolean {
-        // Implementation
-        console.log(`Sending SMS to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
-        return true;
-    }
-}
-
 class NotificationService {
     sendNotification(notificationDomain: NotificationDomain): boolean {
-        let notificationObject: Notification;
+        let notificationObject: INotification;
         let messageAttribute: MessageAttribute;
-        // Assuming Account class has an email and phoneNumber property
-        // Also assuming User has a getAccount() method or account property is public
-        // I'll make the account property public for simplicity in this example
 
         let toAddress = "";
-        let fromAddress = ""; // Placeholder for 'from' address
-        let message = "Order Detail ..."; // Placeholder for message
+        let fromAddress = ""; 
+        let message = "Order Detail ..."; 
 
-        // Attempt to get user's account details for 'to' address
         if (notificationDomain.user && notificationDomain.user.account) {
-            fromAddress = "noreply@amazon.com"; // Default from address
+            fromAddress = "noreply@amazon.com"; 
             switch (notificationDomain.notificationType) {
                 case NotificationType.EMAIL:
                     toAddress = notificationDomain.user.account.email;
@@ -362,19 +311,62 @@ class NotificationService {
 
         switch (notificationDomain.notificationType) {
             case NotificationType.EMAIL:
-                notificationObject = new EmailNotification();
-                // messageAttribute = new MessageAttribute("abc@abc.com", notificationDomain.user.account.email, "Order Detail ...");
+                notificationObject = new EmailNotification();   
                 break;
             case NotificationType.WHATSAPP:
                 notificationObject = new WhatsappNotification();
-                // messageAttribute = new MessageAttribute("9888888888", notificationDomain.user.account.phoneNumber, "Order Detail ...");
                 break;
-            default: // Default to SMS if type is not recognized or missing
+            default: 
                 notificationObject = new SMSNotification();
-                // messageAttribute = new MessageAttribute("988888888", notificationDomain.user.account.phoneNumber, "Order Detail ...");
                 break;
         }
 
         return notificationObject.sendNotification(messageAttribute);
     }
+}
+
+class MessageAttribute { // Renamed from MessageAttributes to MessageAttribute for singular context
+    to: string;
+    from: string;
+    message: string;
+
+    constructor(to: string, from: string, message: string) {
+        this.to = to;
+        this.from = from;
+        this.message = message;
+    }
+}
+
+interface INotification {
+    sendNotification(messageAttribute: MessageAttribute): boolean;
+}
+
+class EmailNotification implements INotification {
+    sendNotification(messageAttribute: MessageAttribute): boolean {
+        // Implementation
+        console.log(`Sending email to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
+        return true;
+    }
+}
+
+class WhatsappNotification implements INotification {
+    sendNotification(messageAttribute: MessageAttribute): boolean {
+        // Implementation
+        console.log(`Sending WhatsApp to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
+        return true;
+    }
+}
+
+class SMSNotification implements INotification {
+    sendNotification(messageAttribute: MessageAttribute): boolean {
+        // Implementation
+        console.log(`Sending SMS to ${messageAttribute.to} from ${messageAttribute.from}: ${messageAttribute.message}`);
+        return true;
+    }
+}
+
+enum NotificationType { 
+    EMAIL = "EMAIL",
+    WHATSAPP = "WHATSAPP",
+    SMS = "SMS",
 }
