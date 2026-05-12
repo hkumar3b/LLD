@@ -1,203 +1,250 @@
-class ParkingLot{
-    parkingFloors:ParkingFloor[];
-    enterance:Enterance[];
-    exit:Exit[];
-    address:Address;
-    constructor(parkingFloors:ParkingFloor[],enterance:Enterance[],exit:Exit[],address:Address){
-        this.parkingFloors=parkingFloors;
-        this.enterance=enterance;
-        this.exit=exit;
-        this.address=address;
+class ParkingLot {
+    parkingFloors: ParkingFloor[];
+    entrances: Entrance[];
+    exits: Exit[];
+    address: Address;
+    parkingLotName: string;
+
+    constructor(parkingFloors: ParkingFloor[], entrances: Entrance[], exits: Exit[], address: Address, parkingLotName: string) {
+        this.parkingFloors = parkingFloors;
+        this.entrances = entrances;
+        this.exits = exits;
+        this.address = address;
+        this.parkingLotName = parkingLotName;
     }
 
-    parkingLotAvailableForVehicle(vehicle:Vehicle):boolean{
-    }
-    updateParkingAttendant(parkingAttendant:ParkingAttendant,gateID:string):boolean{
+    isParkingSpaceAvailableForVehicle(vehicle: Vehicle): boolean {
+        return false;
     }
     
-}
-
-class ParkingFloor{
-    levelId:number;
-    isFull:boolean;
-    parkingSpace:ParkingSpace[];
-    parkingDisplayBoard:ParkingDisplayBoard;
-    constructor(levelId:number,isFull:boolean,parkingSpace:ParkingSpace[],parkingDisplayBoard:ParkingDisplayBoard){
-        this.levelId=levelId;
-        this.isFull=isFull;
-        this.parkingSpace=parkingSpace;
-        this.parkingDisplayBoard=parkingDisplayBoard;
+    updateParkingAttendant(parkingAttendant: ParkingAttendant, gateId: number): boolean {
+        return false;
     }
 }
 
-class Gate{
-    gateId:string;
-    parkingAttendent:ParkingAttendent;
-    constructor(gateId:string,parkingAttendent:ParkingAttendent){
-        this.gateId=gateId;
-        this.parkingAttendent=parkingAttendent;
+class ParkingFloor {
+    levelId: number;
+    parkingSpaces: ParkingSpace[];
+    parkingDisplayBoard: ParkingDisplayBoard;
+
+    constructor(levelId: number, parkingSpaces: ParkingSpace[], parkingDisplayBoard: ParkingDisplayBoard) {
+        this.levelId = levelId;
+        this.parkingSpaces = parkingSpaces;
+        this.parkingDisplayBoard = parkingDisplayBoard;
     }
 }
 
-class Enterance extends Gate{
-    constructor(gateId:string,parkingAttendent:ParkingAttendent){
-        super(gateId,parkingAttendent);
-    }
-    getParkingTicket(vehicle:Vehicle):ParkingTicket{
+class Gate {
+    gateId: number;
+    parkingAttendant: ParkingAttendant;
+
+    constructor(gateId: number, parkingAttendant: ParkingAttendant) {
+        this.gateId = gateId;
+        this.parkingAttendant = parkingAttendant;
     }
 }
 
-class Exit extends Gate{
-    constructor(gateId:string,parkingAttendent:ParkingAttendent){
-        super(gateId,parkingAttendent);
-    }
-    processPayment(parkingTicket:ParkingTicket):void{
+class Entrance extends Gate {
+    getParkingTicket(vehicle: Vehicle): ParkingTicket {
+        return null as any;
     }
 }
 
-class ParkingSpace{
-    spaceId:string;
-    vehicle:Vehicle;
-    vehicleType:VehicleType;
-    costPerHour:number;
-    isAvailable:boolean;
-    constructor(spaceId:string,vehicle:Vehicle,vehicleType:VehicleType,costPerHour:number,isAvailable:boolean){
-        this.spaceId=spaceId;
-        this.vehicle=vehicle;
-        this.vehicleType=vehicleType;
-        this.costPerHour=costPerHour;
-        this.isAvailable=isAvailable;
+class Exit extends Gate {
+    payForParking(parkingTicket: ParkingTicket, paymentType: PaymentType): ParkingTicket {
+        return null as any;
     }
 }
 
-class ParkingDisplayBoard{
-    freeSlotAvilableMap:Map<ParkingSpaceType,number>;
-    constructor(freeSlotAvilableMap:Map<ParkingSpaceType,number>){
-        this.freeSlotAvilableMap=freeSlotAvilableMap;
-    }
-    updateParkingSpaceBoard(parkingSpaceType:ParkingSpaceType):void{
-        
+class Address {
+    country: string;
+    state: string;
+    city: string;
+    street: string;
+    pinCode: string;
+
+    constructor(country: string, state: string, city: string, street: string, pinCode: string) {
+        this.country = country;
+        this.state = state;
+        this.city = city;
+        this.street = street;
+        this.pinCode = pinCode;
     }
 }
 
-class Account{
-    name:string;
-    email:string;
-    password:string;
-    empId:string;
-    address:Address;
-    constructor(name:string,email:string,password:string,empId:string,address:Address){
-        this.name=name;
-        this.email=email;
-        this.password=password;
-        this.empId=empId;
-        this.address=address;
+class ParkingSpace {
+    spaceId: number;
+    isFree: boolean;
+    costPerHour: number;
+    vehicle: Vehicle;
+    parkingSpaceType: ParkingSpaceType;
+
+    constructor(spaceId: number, isFree: boolean, costPerHour: number, vehicle: Vehicle, parkingSpaceType: ParkingSpaceType) {
+        this.spaceId = spaceId;
+        this.isFree = isFree;
+        this.costPerHour = costPerHour;
+        this.vehicle = vehicle;
+        this.parkingSpaceType = parkingSpaceType;
     }
 }
 
-class Admin extends Account{
-    addParkingFloor():boolean{
-        
+class ParkingDisplayBoard {
+    freeSpotsAvailableMap: Map<ParkingSpaceType, number>;
+
+    constructor(freeSpotsAvailableMap: Map<ParkingSpaceType, number>) {
+        this.freeSpotsAvailableMap = freeSpotsAvailableMap;
     }
-    addParkingSpace(parkingSpace:ParkingSpace):boolean{
-        
-    }
-    addParkingDisplayBoard(parkingDisplayBoard:ParkingDisplayBoard):boolean{
-        
-    }
-    addEntrance(entrance:Enterance):boolean{
-        
-    }
-    addExit(exit:Exit):boolean{
-        
-    }
-    removeParkingFloor(parkingFloor:ParkingFloor):boolean{
-        
-    }
-    removeParkingSpace(parkingSpace:ParkingSpace):boolean{
-        
-    }
-    removeParkingDisplayBoard(parkingDisplayBoard:ParkingDisplayBoard):boolean{
-        
-    }
-    removeEntrance(entrance:Enterance):boolean{
-        
-    }
-    removeExit(exit:Exit):boolean{
-        
+
+    updateFreeSpotsAvailable(parkingSpaceType: ParkingSpaceType, spaces: number): void {
+        this.freeSpotsAvailableMap.set(parkingSpaceType, spaces);
     }
 }
 
-class Vehicle{
-    liscenseNumber:string;
-    vehicleType:VehicleType;
-    parkingTicket:ParkingTicket;
-    paymaentInfo:PaymentInfo;
+class Account {
+    name: string;
+    email: string;
+    password: string;
+    empId: string;
+    address: Address;
+
+    constructor(name: string, email: string, password: string, empId: string, address: Address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.empId = empId;
+        this.address = address;
+    }
+}
+
+class Admin extends Account {
+    addParkingFloor(parkingLot: ParkingLot, floor: ParkingFloor): boolean {
+        return false;
+    }
     
-    constructor(liscenseNumber:string,vehicleType:VehicleType,parkingTicket:ParkingTicket,paymaentInfo:PaymentInfo){
-        this.liscenseNumber=liscenseNumber;
-        this.vehicleType=vehicleType;
-        this.parkingTicket=parkingTicket;
-        this.paymaentInfo=paymaentInfo;
+    addParkingSpace(floor: ParkingFloor, parkingSpace: ParkingSpace): boolean {
+        return false;
     }
-}
-
-class ParkingTicket{
-    ticketId:number;
-    levelId:number;
-    spaceId:number;
-    vechileEntryTime:Date;
-    vechileExitTime:Date;
-    parkingSpaceType:ParkingSpaceType;
-    totalParkingTime:Date;
-    parkingFees:number;
-    parkingTicketStatus:ParkingTicketStatus;
     
-    constructor(ticketId:number,levelId:number,spaceId:number,vechileEntryTime:Date,vechileExitTime:Date,totalParkingTime:Date,parkingFees:number){
-        this.ticketId=ticketId;
-        this.levelId=levelId;
-        this.spaceId=spaceId;
-        this.vechileEntryTime=vechileEntryTime;
-        this.vechileExitTime=vechileExitTime;
-        this.totalParkingTime=totalParkingTime;
-        this.parkingFees=parkingFees;
-    }
-    updateTotalCost():void{
-
-    }
-    updateVehicleExitTime(vechileExitTime:Date):void{
-        
+    addParkingDisplayBoard(floor: ParkingFloor, parkingDisplayBoard: ParkingDisplayBoard): boolean {
+        return false;
     }
 }
 
-class PaymentInfo{
-    amount:number;
-    paymentDate:Date;
-    paymentType:PaymentType;
-    transactionId:string;
-    paymentStatus:PaymentStatus;
-    constructor(amount:number,paymentDate:Date,paymentType:PaymentType,transactionId:string,paymentStatus:PaymentStatus){
-        this.amount=amount;
-        this.paymentDate=paymentDate;
-        this.paymentType=paymentType;
-        this.transactionId=transactionId;
-        this.paymentStatus=paymentStatus;
+class ParkingAttendant extends Account {
+    paymentService: Payment;
+
+    constructor(name: string, email: string, password: string, empId: string, address: Address, paymentService: Payment) {
+        super(name, email, password, empId, address);
+        this.paymentService = paymentService;
+    }
+
+    processVehicleEntry(vehicle: Vehicle): boolean {
+        return false;
+    }
+    
+    processPayment(parkingTicket: ParkingTicket, paymentType: PaymentType): PaymentInfo {
+        return null as any;
     }
 }
 
-enum VehicleType{
-    CAR='CAR',
-    TRUCK='TRUCK',
-    VAN='VAN'
+class Vehicle {
+    licenseNumber: string;
+    vehicleType: VehicleType;
+    parkingTicket: ParkingTicket;
+    paymentInfo: PaymentInfo;
+
+    constructor(licenseNumber: string, vehicleType: VehicleType, parkingTicket: ParkingTicket, paymentInfo: PaymentInfo) {
+        this.licenseNumber = licenseNumber;
+        this.vehicleType = vehicleType;
+        this.parkingTicket = parkingTicket;
+        this.paymentInfo = paymentInfo;
+    }
 }
 
-enum ParkingTicketStatus{
-    PAID='PAID',
-    UNPAID='UNPAID'
+class ParkingTicket {
+    ticketId: number;
+    levelId: number;
+    spaceId: number;
+    vehicleEntryDateTime: Date;
+    vehicleExitDateTime: Date;
+    parkingSpaceType: ParkingSpaceType;
+    totalCost: number;
+    parkingTicketStatus: ParkingTicketStatus;
+
+    constructor(
+        ticketId: number, levelId: number, spaceId: number,
+        vehicleEntryDateTime: Date, vehicleExitDateTime: Date,
+        parkingSpaceType: ParkingSpaceType, totalCost: number,
+        parkingTicketStatus: ParkingTicketStatus
+    ) {
+        this.ticketId = ticketId;
+        this.levelId = levelId;
+        this.spaceId = spaceId;
+        this.vehicleEntryDateTime = vehicleEntryDateTime;
+        this.vehicleExitDateTime = vehicleExitDateTime;
+        this.parkingSpaceType = parkingSpaceType;
+        this.totalCost = totalCost;
+        this.parkingTicketStatus = parkingTicketStatus;
+    }
+
+    updateTotalCost(): void {}
+    
+    updateVehicleExitTime(vehicleExitDateTime: Date): void {
+        this.vehicleExitDateTime = vehicleExitDateTime;
+    }
 }
-enum PaymentStatus{
-    SUCCESS='SUCCESS',
-    FAILED='FAILED'
-    DECLINED='DECLINED'
-    PENDING='PENDING'
+
+enum PaymentType {
+    CASH = 'CASH',
+    CREDIT_CARD = 'CREDIT_CARD',
+    DEBIT_CARD = 'DEBIT_CARD',
+    UPI = 'UPI'
+}
+
+enum ParkingSpaceType {
+    BIKE_PARKING = 'BIKE_PARKING',
+    CAR_PARKING = 'CAR_PARKING',
+    TRUCK_PARKING = 'TRUCK_PARKING'
+}
+
+class Payment {
+    makePayment(parkingTicket: ParkingTicket, paymentType: PaymentType): PaymentInfo {
+        return null as any;
+    }
+}
+
+class PaymentInfo {
+    amount: number;
+    paymentDate: Date;
+    transactionId: number;
+    parkingTicket: ParkingTicket;
+    paymentStatus: PaymentStatus;
+
+    constructor(amount: number, paymentDate: Date, transactionId: number, parkingTicket: ParkingTicket, paymentStatus: PaymentStatus) {
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.transactionId = transactionId;
+        this.parkingTicket = parkingTicket;
+        this.paymentStatus = paymentStatus;
+    }
+}
+
+enum VehicleType {
+    BIKE = 'BIKE',
+    CAR = 'CAR',
+    TRUCK = 'TRUCK'
+}
+
+enum ParkingTicketStatus {
+    PAID = 'PAID',
+    ACTIVE = 'ACTIVE'
+}
+
+enum PaymentStatus {
+    UNPAID = 'UNPAID',
+    PENDING = 'PENDING',
+    COMPLETED = 'COMPLETED',
+    DECLINED = 'DECLINED',
+    CANCELLED = 'CANCELLED',
+    REFUNDED = 'REFUNDED'
 }
